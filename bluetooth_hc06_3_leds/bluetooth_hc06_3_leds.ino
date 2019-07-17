@@ -1,24 +1,37 @@
+/** Librerías **/
+
 #include <SoftwareSerial.h>
 
-SoftwareSerial bt(10,11);
-boolean newData = false;
+/** Constantes **/
+
+const int PIN_1 = 3;
+const int PIN_2 = 5;
+const int PIN_3 = 6;
+const int PIN_4 = 2;
+
 const byte numChars = 20;
+
+/** Variables Globales **/
+
+SoftwareSerial bt(10,11);
+
+boolean newData = false;
 char receivedChars[numChars];
-int PIN_1 = 3;
-int PIN_2 = 5;
-int PIN_3 = 6;
+
 String command;
 int id = 0;
 int value = 0;
 
 void setup() {
+  
   Serial.begin(9600);
   bt.begin(9600);
-  Serial.println("Listo");
+  Serial.println("Arduino listo");
 
   pinMode(PIN_1, OUTPUT);
   pinMode(PIN_2, OUTPUT);
   pinMode(PIN_3, OUTPUT);
+  pinMode(PIN_4, OUTPUT);
 }
 
 void loop() {
@@ -38,7 +51,8 @@ void loop() {
   }
 }
 
-void parseData() {  
+void parseData() {
+    
     newData = false;    
     Serial.println( receivedChars );
     command = receivedChars;
@@ -65,14 +79,19 @@ void parseData() {
       case 3:
         analogWrite(PIN_3, value);
         break;
+        case 3:
+        digitalWrite(PIN_4, value);
+        break;
     }
 }
 
 void recvWithStartEndMarkers() 
 {
      
-// function recvWithStartEndMarkers by Robin2 of the Arduino forums
-// See  http://forum.arduino.cc/index.php?topic=288234.0
+/** 
+ *  function recvWithStartEndMarkers by Robin2 of the Arduino forums
+ *  See  http://forum.arduino.cc/index.php?topic=288234.0
+ **/
 
      static boolean recvInProgress = false;
      static byte ndx = 0;
