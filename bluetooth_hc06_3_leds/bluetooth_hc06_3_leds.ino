@@ -79,7 +79,7 @@ void parseData() {
       case 3:
         analogWrite(PIN_3, value);
         break;
-        case 3:
+      case 4:
         digitalWrite(PIN_4, value);
         break;
     }
